@@ -28,7 +28,9 @@ export const Instruction = z.union([
   z.literal('R'),
   z.literal('L'),
 ]);
+export type Instruction = z.output<typeof Instruction>;
+
 export const InstructionArray = z.array(Instruction);
 
-export type EdgeMap = Record<string, true>;
+export type FallMap = Record<string, true>;
 export type RobotInput = ReturnType<typeof parseRobotInput>;

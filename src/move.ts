@@ -1,22 +1,20 @@
-// task mention that some extension for movement will be required
-
-import { Coordinates, Position } from './types';
+import { Position } from './types';
 
 // so move functions are separated
-function moveNorth(p: Coordinates) {
+function moveNorth(p: Position) {
   return { ...p, y: p.y + 1 };
 }
 
-function moveSouth(p: Coordinates) {
-  return { ...p, y: p.y + 1 };
+function moveSouth(p: Position) {
+  return { ...p, y: p.y - 1 };
 }
 
-function moveEast(p: Coordinates) {
+function moveEast(p: Position) {
   return { ...p, x: p.x + 1 };
 }
 
-function moveWest(p: Coordinates) {
-  return { ...p, y: p.y + 1 };
+function moveWest(p: Position) {
+  return { ...p, x: p.x - 1 };
 }
 
 const movePostition = {
@@ -26,7 +24,7 @@ const movePostition = {
   W: moveWest,
 };
 
-function move(p: Position) {
+export function move(p: Position) {
   // TS automatically will detect missing move function
   return movePostition[p.o](p);
 }
