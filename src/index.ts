@@ -1,29 +1,47 @@
-import { z } from 'zod';
 import assert from 'assert';
+import { chunk } from 'lodash';
+import { Coordinates, InstructionArray, Position } from './types';
 
-const Coordinates = z.object({
-  x: z.coerce.number(),
-  y: z.coerce.number(),
-});
+function parseRobotInput(input: string[]) {
+  assert(input.length === 2);
+  const [positionInput, instructionsInput] = input;
 
-// probably .and is too much, it would be cleaner to just got x,y
-// but it shows extend patern
-const Position = Coordinates.and(
-  z.object({
-    o: z.coerce.number(),
-  })
-);
+  const [x, y, o, ...positionRest] = positionInput.split(' ');
+  assert(positionRest.length === 0);
+  const position = Position.parse({ x, y, o });
 
-type Coordinates = z.output<typeof Coordinates>;
+  const instructions = InstructionArray.parse(instructionsInput.split(''));
+
+  return {
+    position,
+    instructions,
+  };
+}
+
+function parseWorldInput(input: string) {
+  const [x, y, ...rest] = input.split(' ');
+  assert(rest.length === 2);
+  return Coordinates.parse({ x, y });
+}
 
 function parseInput(input: string[]) {
   // we should get one line + 2 * x robots lines
   assert(input.length % 2 === 1, 'wrong number of input lines');
-  const worldInput = input[0].split(' ');
-  assert(worldInput.length === 2);
-  const worldSize = Coordinates.parse({ x: worldInput[0], y: worldInput[1] });
+  const [worldInput, ...robotsInput] = input;
+
+  const worldSize = parseWorldInput(worldInput);
+
+  const robotInputChunks = chunk(robotsInput, 2);
+  const parsedRobotInputs = robotInputChunks.map(ri => parseRobotInput(ri));
+
+  return {
+    worldSize,
+    robotInputs: parsedRobotInputs,
+  };
 }
 
 export function martian(input: string[]) {
-  parseInput(input);
+  const { worldSize, robotInputs } = parseInput(input);
+
+  const marsMap = [[]];
 }
