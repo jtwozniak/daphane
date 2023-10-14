@@ -1,19 +1,7 @@
-type Orientation = 'N' | 'S' | 'E' | 'W';
-
-type Position = {
-  x: number;
-  y: number;
-};
-
-type GridSize = Position;
-
-type Coordinates = Position & {
-  o: Orientation;
-};
-
-type Intruction = 'L' | 'R' | 'F';
-
 // task mention that some extension for movement will be required
+
+import { Coordinates, Position } from './types';
+
 // so move functions are separated
 function moveNorth(p: Coordinates) {
   return { ...p, y: p.y + 1 };
@@ -38,7 +26,7 @@ const movePostition = {
   W: moveWest,
 };
 
-function move(p: Coordinates) {
+function move(p: Position) {
   // TS automatically will detect missing move function
   return movePostition[p.o](p);
 }
