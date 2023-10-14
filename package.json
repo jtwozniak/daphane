@@ -1,28 +1,11 @@
 {
   "version": "0.1.0",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "files": [
-    "dist",
     "src"
   ],
-  "engines": {
-    "node": ">=10"
-  },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
+    "test": "jest"
   },
   "prettier": {
     "printWidth": 80,
@@ -32,27 +15,16 @@
   },
   "name": "test",
   "author": "janusz",
-  "module": "dist/test.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/test.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/test.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^9.0.0",
+    "@types/jest": "^29.5.5",
+    "@types/lodash": "^4.14.199",
     "husky": "^8.0.3",
-    "size-limit": "^9.0.0",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.6.2",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.199",
+    "jest": "^29.7.0",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   }
